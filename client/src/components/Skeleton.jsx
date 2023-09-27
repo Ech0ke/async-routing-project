@@ -23,7 +23,7 @@ export function SkeletonList({ amount, children }) {
   );
 }
 
-export function UsersListSkeleton() {
+export function UserCardSkeleton() {
   {
     return (
       <div className="card">
@@ -41,4 +41,25 @@ export function UsersListSkeleton() {
       </div>
     );
   }
+}
+
+export function PostCardSkeleton() {
+  return (
+    <div className="card">
+      <div className="card-header">
+        <Skeleton width={"short"} />
+      </div>
+      <div className="card-body">
+        <div className="card-preview-text">
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+        </div>
+      </div>
+      <div className="card-footer">
+        <Skeleton classNames={"skeleton-btn"} />
+      </div>
+    </div>
+  );
 }

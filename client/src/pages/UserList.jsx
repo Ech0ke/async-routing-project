@@ -1,7 +1,7 @@
 import { Await, Link, defer, useLoaderData } from "react-router-dom";
 import { getUsers } from "../api/users";
 import { Suspense } from "react";
-import { SkeletonList, UsersListSkeleton } from "../components/Skeleton";
+import { SkeletonList, UserCardSkeleton } from "../components/Skeleton";
 
 function UserList() {
   const { usersPromise } = useLoaderData();
@@ -13,7 +13,7 @@ function UserList() {
         <Suspense
           fallback={
             <SkeletonList amount={10}>
-              <UsersListSkeleton />
+              <UserCardSkeleton />
             </SkeletonList>
           }
         >
