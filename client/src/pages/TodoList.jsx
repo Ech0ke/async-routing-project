@@ -14,7 +14,9 @@ function TodoList() {
         <Suspense
           fallback={
             <SkeletonList amount={10}>
-              <Skeleton width={"short"} />
+              <li>
+                <Skeleton width={"short"} />
+              </li>
             </SkeletonList>
           }
         >
