@@ -75,7 +75,7 @@ function Post() {
   );
 }
 
-async function loader({ request: { signal }, params: { postId } }) {
+function loader({ request: { signal }, params: { postId } }) {
   const comments = getComments(postId, { signal });
   const post = getPost(postId, { signal });
 

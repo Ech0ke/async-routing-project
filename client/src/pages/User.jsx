@@ -87,7 +87,7 @@ function User() {
   );
 }
 
-async function loader({ request: { signal }, params: { userId } }) {
+function loader({ request: { signal }, params: { userId } }) {
   const posts = getPosts({ signal, params: { userId } });
   const todos = getTodos({ signal, params: { userId } });
   const user = getUser(userId, { signal });
