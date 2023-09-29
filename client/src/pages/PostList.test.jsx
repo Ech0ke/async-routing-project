@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { renderRoute } from "../../test-setup/renderRoute";
 import { addMockApiRouteHandler } from "../../test-setup/mockServer";
 import userEvent from "@testing-library/user-event";
@@ -53,7 +53,9 @@ describe("PostList page", () => {
     });
 
     renderRoute("/posts");
-
+    await waitFor(() =>
+      expect(screen.queryByText("Loading...")).not.toBeInTheDocument()
+    );
     expect(await screen.findByText("first post")).toBeInTheDocument();
     expect(screen.getByText("second post")).toBeInTheDocument();
 
@@ -65,6 +67,9 @@ describe("PostList page", () => {
     await user.type(queryInput, "third");
     await user.click(filterBtn);
 
+    await waitFor(() =>
+      expect(screen.queryByText("Loading...")).not.toBeInTheDocument()
+    );
     expect(screen.queryByText("first post")).not.toBeInTheDocument();
     expect(screen.queryByText("second post")).not.toBeInTheDocument();
     expect(queryInput).toHaveValue("third");
@@ -74,6 +79,11 @@ describe("PostList page", () => {
     await user.selectOptions(authorInput, "second user");
     await user.clear(queryInput);
     await user.click(filterBtn);
+
+    await waitFor(() =>
+      expect(screen.queryByText("Loading...")).not.toBeInTheDocument()
+    );
+
     expect(screen.queryByText("first post")).not.toBeInTheDocument();
     expect(screen.getByText("second post")).toBeInTheDocument();
     expect(authorInput).toHaveValue("2");

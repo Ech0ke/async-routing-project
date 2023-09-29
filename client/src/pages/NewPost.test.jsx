@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { renderRoute } from "../../test-setup/renderRoute";
 import { addMockApiRouteHandler } from "../../test-setup/mockServer";
 import userEvent from "@testing-library/user-event";
@@ -73,7 +73,7 @@ describe("NewPost page", () => {
     const user = userEvent.setup();
 
     const titleInput = await screen.findByLabelText("Title");
-    const authorInput = screen.getByLabelText("Author");
+    const authorInput = await screen.findByLabelText("Author");
     const bodyInput = screen.getByLabelText("Body");
     const saveBtn = screen.getByText("Save");
 
@@ -88,9 +88,17 @@ describe("NewPost page", () => {
     await user.click(saveBtn);
 
     expect(newPostApiHandler).toHaveBeenCalledOnce();
-    expect(screen.getByText("third post")).toBeInTheDocument();
-    expect(screen.getByText("second user")).toBeInTheDocument();
-    expect(screen.getByText("third post body")).toBeInTheDocument();
+    await waitFor(async () => {
+      expect(screen.queryByText("Saving")).not.toBeInTheDocument();
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByText("Loading...")).not.toBeInTheDocument()
+    );
+    expect(await screen.findByText(body)).toBeInTheDocument();
+    expect(await screen.findByText(title)).toBeInTheDocument();
+    expect(await screen.findByText(selectedAuthor)).toBeInTheDocument();
+
     screen.debug();
   });
 });
