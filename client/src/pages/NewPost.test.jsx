@@ -95,9 +95,10 @@ describe("NewPost page", () => {
     await waitFor(() =>
       expect(screen.queryByText("Loading...")).not.toBeInTheDocument()
     );
-    expect(await screen.findByText(body)).toBeInTheDocument();
+
     expect(await screen.findByText(title)).toBeInTheDocument();
     expect(await screen.findByText(selectedAuthor)).toBeInTheDocument();
+    expect(screen.getByText(body)).toBeInTheDocument();
 
     screen.debug();
   });
