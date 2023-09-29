@@ -87,3 +87,7 @@ export function SimpleSkeletonText({ resolve, children }) {
     </Suspense>
   );
 }
+
+export function SkeletonInput() {
+  return <div className="skeleton skeleton-input"></div>;
+}
